@@ -27,6 +27,7 @@ namespace Frontend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddDbContext<MecheDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             Util.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
 
@@ -52,6 +53,7 @@ namespace Frontend
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
             }
             else
             {
@@ -67,6 +69,8 @@ namespace Frontend
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

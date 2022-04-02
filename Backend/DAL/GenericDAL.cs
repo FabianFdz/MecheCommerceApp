@@ -15,7 +15,12 @@ namespace Backend.DAL
 
         public GenericDAL()
         {
-            Context = new MecheDBContext();
+           
+        }
+
+        public GenericDAL(MecheDBContext context)
+        {
+            Context = context;
         }
 
         public bool Add(TEntity entity)
