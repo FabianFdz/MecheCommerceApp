@@ -42,6 +42,22 @@ namespace Backend.DAL
                 throw;
             }
         }
+        public IEnumerable<Producto> GetIDS(List<int> productosid )
+        {
+            try
+            {
+                Producto producto;
+                using (unidad = new UnidadDeTrabajo<Producto>(new MecheDBContext()))
+                {
+                    unidad.
+                }
+                return producto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public IEnumerable<Producto> GetAll()
         {

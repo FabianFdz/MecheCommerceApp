@@ -1,5 +1,6 @@
 ﻿using Backend.DAL;
 using Backend.Entities;
+using Frontend.Extensions;
 using Frontend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,28 +16,32 @@ namespace Frontend.Controllers
         private IProductoDAL productoDAL;
 
         // GET: ProductoController
-        public ActionResult Index()
+        public ActionResult Index(int? idproducto)
         {
+            if (idproducto != null)
+            {
+                List<int> carrito;
+                if (HttpContext.Session.GetObject<List<int>>("CARRITO") == null)
+                {
+                    carrito = new List<int>();
+                }
+                else
+                {
+                    carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
+                }
+                if (carrito.Contains(idproducto.Value) == false)
+                {
+                    carrito.Add(idproducto.Value);
+                    HttpContext.Session.SetObject("CARRITO", carrito);
+                }
+            }
+
             List<Producto> productos;
-            List<ProductViewModel> lista = new List<ProductViewModel>();
             productoDAL = new ProductoDAL();
 
             productos = productoDAL.GetAll().ToList();
-
-            ProductViewModel productVM;
-
-            foreach (var item in productos)
-            {
-                productVM = new ProductViewModel
-                {
-                    Id = item.Id,
-                    Nombre = item.Nombre,
-                    PrecioBase = item.PrecioBase
-                };
-                lista.Add(productVM);
-            }
             
-            return View(lista);
+            return View(productos);
         }
 
         // GET: ProductoController/Details/5
@@ -47,6 +52,25 @@ namespace Frontend.Controllers
             producto = productoDAL.Get(id);
             
             return View(producto);
+        }
+        public IActionResult Carrito(int? idproducto)
+        {
+            List<int> carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
+            if (carrito == null)
+            {
+                return View();
+            }
+            else
+            {
+                if (idproducto != null)
+                {
+                    carrito.Remove(idproducto.Value);
+                    HttpContext.Session.SetObject("CARRITO", carrito);
+                }
+
+                List<Producto> productos = this.repo.GetProductosCarrito(carrito);
+                return View(productos);
+            }
         }
 
         // GET: ProductoController/Create
