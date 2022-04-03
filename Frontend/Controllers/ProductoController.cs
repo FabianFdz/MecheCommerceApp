@@ -15,6 +15,11 @@ namespace Frontend.Controllers
     {
         private IProductoDAL productoDAL;
 
+        public ProductoController ()
+        {
+            productoDAL = new ProductoDAL();
+        }
+
         // GET: ProductoController
         public ActionResult Index(int? idproducto)
         {
@@ -37,11 +42,25 @@ namespace Frontend.Controllers
             }
 
             List<Producto> productos;
-            productoDAL = new ProductoDAL();
+            List<ProductViewModel> lista = new List<ProductViewModel>();
 
             productos = productoDAL.GetAll().ToList();
-            
-            return View(productos);
+
+            ProductViewModel productVM;
+
+            foreach (var item in productos)
+            {
+                productVM = new ProductViewModel
+                {
+                    Id = item.Id,
+                    Nombre = item.Nombre,
+                    PrecioBase = item.PrecioBase
+                };
+
+                lista.Add(productVM);
+            }
+
+            return View(lista);
         }
 
         // GET: ProductoController/Details/5
@@ -53,6 +72,24 @@ namespace Frontend.Controllers
             
             return View(producto);
         }
+
+        private IEnumerable<ProductViewModel> GetIds(List<int> ids)
+        {
+            List<ProductViewModel> products = new List<ProductViewModel>();
+            foreach(int id in ids)
+            {
+                Producto product = productoDAL.Get(id);
+                products.Add(new ProductViewModel
+                {
+                    Id = product.Id,
+                    Nombre = product.Nombre,
+                    PrecioBase = product.PrecioBase
+                });
+            }
+
+            return products;
+        }
+
         public IActionResult Carrito(int? idproducto)
         {
             List<int> carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
@@ -68,9 +105,17 @@ namespace Frontend.Controllers
                     HttpContext.Session.SetObject("CARRITO", carrito);
                 }
 
-                List<Producto> productos = this.repo.GetProductosCarrito(carrito);
+                IEnumerable<ProductViewModel> productos = GetIds(carrito);
                 return View(productos);
             }
+        }
+
+        public IActionResult Pedidos()
+        {
+            List<int> carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
+            IEnumerable<ProductViewModel> productos = GetIds(carrito);
+            HttpContext.Session.Remove("CARRITO");
+            return View(productos);
         }
 
         // GET: ProductoController/Create

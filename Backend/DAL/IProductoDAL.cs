@@ -9,5 +9,6 @@ namespace Backend.DAL
 {
     public interface IProductoDAL : IGenericDAL<Producto>
     {
+        public IEnumerable<Producto> GetIDS(List<int> productosid);
     }
 }

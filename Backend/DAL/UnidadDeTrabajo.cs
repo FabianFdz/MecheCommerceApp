@@ -9,7 +9,7 @@ namespace Backend.DAL
 {
     public class UnidadDeTrabajo<T> : IDisposable where T : class
     {
-        private readonly MecheDBContext context;
+        public MecheDBContext context;
         
         public IGenericDAL<T> genericDAL;
 

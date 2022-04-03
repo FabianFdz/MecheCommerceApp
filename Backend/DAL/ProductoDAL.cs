@@ -46,12 +46,14 @@ namespace Backend.DAL
         {
             try
             {
-                Producto producto;
+                IEnumerable<Producto> productos;
                 using (unidad = new UnidadDeTrabajo<Producto>(new MecheDBContext()))
                 {
-                    unidad.
+                    productos = from p in unidad.context.Productos
+                                   where productosid.Contains(p.Id)
+                                   select p;
                 }
-                return producto;
+                return productos.ToList();
             }
             catch (Exception)
             {

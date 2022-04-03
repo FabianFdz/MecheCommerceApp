@@ -47,7 +47,6 @@ namespace Backend.DAL
                 return null;
             }
         }
- 
 
         public IEnumerable<TEntity> GetAll()
         {
