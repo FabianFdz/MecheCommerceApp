@@ -42,13 +42,10 @@ namespace Backend.Entities
             {
                 entity.ToTable("Cliente");
 
-                entity.HasIndex(e => e.Usuario, "UQ__Cliente__E3237CF773D51B42")
+                entity.HasIndex(e => e.Correo, "UQ__tmp_ms_x__60695A194F020AB9")
                     .IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Canton)
-                    .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false);
 
@@ -58,47 +55,30 @@ namespace Backend.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Direccion)
-                    .IsRequired()
                     .HasMaxLength(512)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Distrito)
-                    .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Nombre)
-                    .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Pass)
-                    .IsRequired()
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.PrimerApellido)
-                    .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Provincia)
-                    .IsRequired()
                     .HasMaxLength(32)
                     .IsUnicode(false);
 
                 entity.Property(e => e.SegundoApellido)
-                    .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Telefono)
-                    .IsRequired()
-                    .HasMaxLength(16)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Usuario)
-                    .IsRequired()
                     .HasMaxLength(16)
                     .IsUnicode(false);
             });
@@ -168,7 +148,7 @@ namespace Backend.Entities
                     .WithMany(p => p.Ordens)
                     .HasForeignKey(d => d.IdCliente)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Orden__IdCliente__656C112C");
+                    .HasConstraintName("FK__Orden__IdCliente__06CD04F7");
             });
 
             modelBuilder.Entity<Producto>(entity =>

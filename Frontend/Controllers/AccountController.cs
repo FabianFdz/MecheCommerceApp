@@ -1,4 +1,5 @@
-﻿using Frontend.Models;
+﻿using Backend.DAL;
+using Frontend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,12 +13,14 @@ namespace Frontend.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
+        private IClienteDAL ClienteDAL;
 
         public AccountController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            ClienteDAL = new ClienteDAL();
         }
 
 
@@ -47,6 +50,7 @@ namespace Frontend.Controllers
                 if (result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
+                    ClienteDAL.Add(new Backend.Entities.Cliente { Correo = user.UserName });
                     return RedirectToAction("index", "home");
                 }
 

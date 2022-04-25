@@ -2,6 +2,7 @@
 using Backend.Entities;
 using Frontend.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,114 +14,60 @@ namespace Frontend.Controllers
     public class ClienteController : Controller
     {
         IClienteDAL clienteDAL;
+        private readonly UserManager<IdentityUser> userManager;
+
+        public ClienteController(UserManager<IdentityUser> userManager)
+        {
+            this.userManager = userManager;
+        }
 
         // GET: ClienteController
         public ActionResult Index()
         {
-            List<Cliente> clientes;
-            List<ClienteViewModel> lista = new List<ClienteViewModel>();
+            Cliente cliente;
             clienteDAL = new ClienteDAL();
 
-            clientes = clienteDAL.GetAll().ToList();
+            cliente = clienteDAL.GetByEmail(User.Identity.Name);
             ClienteViewModel clienteVM;
 
-            foreach (var item in clientes)
+            clienteVM = new ClienteViewModel
             {
-                clienteVM = new ClienteViewModel
-                {
-                    Id = item.Id,
-                    Nombre = item.Nombre,
-                    PrimerApellido = item.PrimerApellido,
-                    SegundoApellido = item.SegundoApellido,
-                    Correo = item.Correo,
-                    Telefono = item.Telefono,
-                    Usuario = item.Usuario,
-                    Pass = item.Pass,
-                    Direccion = item.Direccion,
-                    Provincia = item.Provincia,
-                    Canton = item.Canton,
-                    Distrito = item.Distrito
-                 };
-                lista.Add(clienteVM);
-            }
+                Id = cliente.Id,
+                Nombre = cliente.Nombre,
+                PrimerApellido = cliente.PrimerApellido,
+                SegundoApellido = cliente.SegundoApellido,
+                Correo = cliente.Correo,
+                Telefono = cliente.Telefono,
+                Direccion = cliente.Direccion,
+                Provincia = cliente.Provincia,
+                Canton = cliente.Canton,
+                Distrito = cliente.Distrito
+            };
 
-            return View(lista);
+            return View(clienteVM);
         }
 
-        // GET: ClienteController/Details/5
-        public ActionResult Details(int id)
-        {
-            clienteDAL = new ClienteDAL();
-            Cliente cliente = clienteDAL.Get(id);
-            return View(cliente);
-        }
-
-        // GET: ClienteController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ClienteController/Create
+        // POST: ClienteController/Index
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Cliente cliente)
+        public ActionResult Index(ClienteViewModel cliente)
         {
             try
             {
                 clienteDAL = new ClienteDAL();
-                clienteDAL.Add(cliente);
+                clienteDAL.Update(new Cliente {
+                    Canton = cliente.Canton,
+                    Correo = cliente.Correo,
+                    Direccion = cliente.Direccion,
+                    Distrito = cliente.Distrito,
+                    Id = cliente.Id,
+                    Nombre = cliente.Nombre,
+                    PrimerApellido = cliente.PrimerApellido,
+                    Provincia = cliente.Provincia,
+                    SegundoApellido = cliente.SegundoApellido,
+                    Telefono = cliente.Telefono
+                });
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClienteController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            clienteDAL = new ClienteDAL();
-            Cliente cliente = clienteDAL.Get(id);
-            return View(cliente);
-        }
-
-        // POST: ClienteController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Cliente cliente)
-        {
-            try
-            {
-                clienteDAL = new ClienteDAL();
-                clienteDAL.Update(cliente);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClienteController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            clienteDAL = new ClienteDAL();
-            Cliente cliente = clienteDAL.Get(id);
-            return View(cliente);
-        }
-
-        // POST: ClienteController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(Cliente cliente)
-        {
-            try
-            {
-                clienteDAL = new ClienteDAL();
-                clienteDAL.Remove(cliente);
                 return RedirectToAction(nameof(Index));
             }
             catch

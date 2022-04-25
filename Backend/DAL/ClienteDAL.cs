@@ -43,6 +43,23 @@ namespace Backend.DAL
             }
         }
 
+        public Cliente GetByEmail(string email)
+        {
+            try
+            {
+                Cliente cliente;
+                using (unidad = new UnidadDeTrabajo<Cliente>(new MecheDBContext()))
+                {
+                    cliente = unidad.context.Set<Cliente>().Where(cliente => cliente.Correo.Equals(email)).FirstOrDefault();
+                }
+                return cliente;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public IEnumerable<Cliente> GetAll()
         {
             try

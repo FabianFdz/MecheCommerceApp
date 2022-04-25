@@ -28,9 +28,10 @@ namespace Backend.DAL
             try
             {
                 Context.Set<TEntity>().Add(entity);
+                Context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
@@ -66,6 +67,7 @@ namespace Backend.DAL
             {
                 Context.Set<TEntity>().Attach(entity);
                 Context.Set<TEntity>().Remove(entity);
+                Context.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -79,9 +81,10 @@ namespace Backend.DAL
             try
             {
                 Context.Entry(entity).State = EntityState.Modified;
+                Context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

@@ -18,8 +18,6 @@ namespace Backend.Entities
         public string SegundoApellido { get; set; }
         public string Correo { get; set; }
         public string Telefono { get; set; }
-        public string Usuario { get; set; }
-        public string Pass { get; set; }
         public string Direccion { get; set; }
         public string Provincia { get; set; }
         public string Canton { get; set; }

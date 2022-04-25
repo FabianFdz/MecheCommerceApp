@@ -9,5 +9,6 @@ namespace Backend.DAL
 {
     public interface IClienteDAL : IGenericDAL<Cliente>
     {
+        public Cliente GetByEmail(string email);
     }
 }

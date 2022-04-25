@@ -33,7 +33,11 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item ml-auto">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout @User.Identity.Name</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                            <li class="nav-item align-content-lg-end">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index"><strong>@User.Identity.Name</strong></a>
+                                
                             </li>
                         }
                         else
