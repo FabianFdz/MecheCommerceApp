@@ -11,10 +11,12 @@ namespace Frontend.Controllers
     public class OrdenesController : Controller
     {
         IOrdenDAL OrdenDAL;
+        IClienteDAL ClienteDAL;
 
         public OrdenesController()
         {
             OrdenDAL = new OrdenDAL();
+            ClienteDAL = new ClienteDAL();
         }
 
         private OrdenViewModel parseToVM(Orden orden)
@@ -34,7 +36,8 @@ namespace Frontend.Controllers
         // GET: OrdenesController
         public ActionResult Index()
         {
-            IEnumerable ordenes = OrdenDAL.GetAll();
+            Cliente cliente = ClienteDAL.GetByEmail(User.Identity.Name);
+            IEnumerable ordenes = cliente.Ordens;
             List<OrdenViewModel> ordenesVM = new List<OrdenViewModel>();
             foreach(Orden orden in ordenes)
             {

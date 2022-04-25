@@ -1,7 +1,7 @@
 ﻿@model Frontend.Models.ClienteViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Información Personal";
 }
 
 <h1>Información Personal</h1>
@@ -36,16 +36,6 @@
                 <label asp-for="Telefono" class="control-label"></label>
                 <input asp-for="Telefono" class="form-control" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Usuario" class="control-label"></label>
-                <input asp-for="Usuario" class="form-control" />
-                <span asp-validation-for="Usuario" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Pass" class="control-label"></label>
-                <input asp-for="Pass" class="form-control" />
-                <span asp-validation-for="Pass" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Direccion" class="control-label"></label>
