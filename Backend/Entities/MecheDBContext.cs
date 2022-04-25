@@ -105,8 +105,6 @@ namespace Backend.Entities
             {
                 entity.ToTable("LineasOrden");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Precio).HasColumnType("money");
 
                 entity.HasOne(d => d.IdOrdenNavigation)
@@ -126,15 +124,12 @@ namespace Backend.Entities
             {
                 entity.ToTable("Orden");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Estado)
                     .IsRequired()
                     .HasMaxLength(32)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FacturaHash)
-                    .IsRequired()
                     .HasMaxLength(128)
                     .IsUnicode(false);
 

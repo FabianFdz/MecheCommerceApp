@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Backend.DAL
 {
-    public interface ILineaOrden : IGenericDAL<LineasOrden>
+    public interface ILineaOrdenDAL : IGenericDAL<LineasOrden>
     {
     }
 }

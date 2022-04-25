@@ -14,7 +14,7 @@ namespace Backend.Entities
 
         public int Id { get; set; }
         public int IdCliente { get; set; }
-        public int DireccionCompleta { get; set; }
+        public string DireccionCompleta { get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaEntrega { get; set; }
         public decimal PrecioTotal { get; set; }

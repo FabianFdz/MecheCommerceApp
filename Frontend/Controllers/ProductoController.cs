@@ -14,10 +14,16 @@ namespace Frontend.Controllers
     public class ProductoController : Controller
     {
         private IProductoDAL productoDAL;
+        private IOrdenDAL ordenDAL;
+        private ILineaOrdenDAL lineaOrdenDAL;
+        IClienteDAL clienteDAL;
 
         public ProductoController ()
         {
             productoDAL = new ProductoDAL();
+            ordenDAL = new OrdenDAL();
+            clienteDAL = new ClienteDAL();
+            lineaOrdenDAL = new LineaOrdenDAL();
         }
 
         // GET: ProductoController
@@ -113,7 +119,28 @@ namespace Frontend.Controllers
         public IActionResult Pedidos()
         {
             List<int> carrito = HttpContext.Session.GetObject<List<int>>("CARRITO");
+            Cliente cliente = clienteDAL.GetByEmail(User.Identity.Name);
             IEnumerable<ProductViewModel> productos = GetIds(carrito);
+            ordenDAL.Add(new Orden
+            {
+                DireccionCompleta = cliente.Direccion + ", " + cliente.Canton + ", " + cliente.Provincia,
+                Estado = "Completada",
+                FechaCreacion = new DateTime(),
+                FechaEntrega = new DateTime().AddDays(2),
+                IdCliente = cliente.Id,
+                PrecioTotal = productos.Select(prod => prod.PrecioBase).Sum()
+            });
+            Orden orden = cliente.Ordens.Last(); // Probar que agarre el correcto!
+            foreach (ProductViewModel producto in productos)
+            {
+                lineaOrdenDAL.Add(new LineasOrden
+                {
+                    Cantidad = 1,
+                    IdOrden = orden.Id,
+                    IdProducto = producto.Id,
+                    Precio = producto.PrecioBase
+                });
+            }
             HttpContext.Session.Remove("CARRITO");
             return View(productos);
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Backend.DAL
 {
-    public class LineaOrdenDAL : ILineaOrden
+    public class LineaOrdenDAL : ILineaOrdenDAL
     {
         private UnidadDeTrabajo<LineasOrden> unidad;
         public bool Add(LineasOrden entity)
