@@ -5,44 +5,33 @@
     List<int> carrito = Context.Session.GetObject<List<int>>("CARRITO");
 }
 
-<h1>GetProductos</h1>
+<h1>Lista De Productos</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioBase)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioBase)
-                </td>
-                <td>
-                    @if (carrito != null && carrito.Contains(item.Id))
-                    {
-                        <button disabled class="btn btn-outline-danger disabled">En carrito</button>
-                    }
-                    else
-                    {
-                        <a class="btn btn-outline-success" asp-action="Index" asp-controller="Producto" asp-route-idproducto="@item.Id">
-                            Añadir a carrito
-                        </a>
-                    }
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="https://picsum.photos/200">
+                <div class="caption">
+                    <h3>@Html.DisplayFor(modelItem => item.Nombre)</h3>
 
-                </td>
-            </tr>
+                    <p>@Html.DisplayFor(modelItem => item.PrecioBase)</p>
+
+                    <p>
+                        @if (carrito != null && carrito.Contains(item.Id))
+                        {
+                            <button disabled class="btn btn-outline-danger disabled">En carrito</button>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-success" asp-action="Index" asp-controller="Producto" asp-route-idproducto="@item.Id">
+                                Añadir a carrito
+                            </a>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
         }
-    </tbody>
-</table>
+ </div>

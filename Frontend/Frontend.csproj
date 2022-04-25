@@ -19,4 +19,19 @@
     <ProjectReference Include="..\Backend\Backend.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\img\Carousel\aguacate.jpg" />
+    <None Include="wwwroot\img\Carousel\banano.jpg" />
+    <None Include="wwwroot\img\Carousel\kiwi.jpg" />
+    <None Include="wwwroot\img\Carousel\manzana.jpg" />
+    <None Include="wwwroot\img\Carousel\naranja.jpg" />
+    <None Include="wwwroot\img\Carousel\pera.jpg" />
+    <None Include="wwwroot\img\Carousel\uvas.jpg" />
+    <None Include="wwwroot\img\Imagenes\Coliflor.jpg" />
+    <None Include="wwwroot\img\Imagenes\lechuga.jpg" />
+    <None Include="wwwroot\img\Imagenes\piña.jpg" />
+    <None Include="wwwroot\img\Imagenes\sandia.jpg" />
+    <None Include="wwwroot\img\Imagenes\tomate.jpg" />
+  </ItemGroup>
+
 </Project>
