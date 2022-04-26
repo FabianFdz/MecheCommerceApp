@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MecheProject</title>
+    <title>@ViewData["Title"] - MecheFruits</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfP1sB0nBVLoN-XxqIYUPQL7-q4wcShVk"></script>
@@ -15,20 +15,22 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" id="nav">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style=" background-color: #558B29">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Meche App</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/img/iconos/2998126_basket_food_fruit_garden_harvest_icon.png" alt=""  width="30" height="24" class="d-inline-block align-text-top">
+                MecheFruits</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent">
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producto" asp-action="Carrito">Ir a Carrito</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Producto" asp-action="Carrito">Ir a Carrito</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
@@ -62,17 +64,33 @@
             @RenderBody()            
         </main>
     </div>
+    <div class="clearfix"></div>
+    <footer class="border-top footer text-muted" style="z-index:999;">
+        <div class="container row">
+            <div class="col">
+                <p class="copyright">
+                    MecheFruits &copy;
+                    <script>document.write(new Date().getFullYear());</script>
+                </p>
+            </div>
+            <div class="col">
+                <a class="navbar-brand" href="https://wa.me/87360758" style="color:black">
+                    <img src="~/img/iconos/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                    Contactanos
+                </a>
+            </div>
+            <div class="col">
+                @model Frontend.Models.TipoCambio
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            <p>Contactanos</p>
-            <i class="fa-brands fa-whatsapp"></i>
+                <h1>Tipo cambio</h1>
+                <h1>Compra de dolares en colones: @Model.conversion_rate</h1>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: '852c380e-4df0-4b7d-bbf8-641d71d1625a', f: true }); done = true; } }; })();</script>
+   <script type='text/javascript' data-cfasync='false'>window.purechatApi = { l: [], t: [], on: function () { this.l.push(arguments); } }; (function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({c: '4c8e24d5-746c-4b87-922c-a675bf7a8f01', f: true }); done = true; } }; })();</script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
