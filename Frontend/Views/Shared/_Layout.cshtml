@@ -29,29 +29,32 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="API" asp-action="TipoCambio">Tipo de Cambio</a>
+                        </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
+                            <li class="nav-item ml-auto">
                                 <a class="nav-link text-light" asp-area="" asp-controller="Producto" asp-action="Carrito">Ir a Carrito</a>
                             </li>
-                            <li class="nav-item ml-auto">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Ordenes" asp-action="Index">Mis Ordenes</a>
+                            <li class="nav-item align-content-lg-end">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Ordenes" asp-action="Index">Mis Ordenes</a>
                             </li>
                             <li class="nav-item align-content-lg-end">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
                             <li class="nav-item align-content-lg-end">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="Index"><strong>@User.Identity.Name</strong></a>
-                                
+                                <a class="nav-link text-light" asp-area="" asp-controller="Cliente" asp-action="Index"><strong>@User.Identity.Name</strong></a>
+
                             </li>
                         }
                         else
                         {
                             <li class="nav-item ml-auto">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item align-content-lg-end">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                             </li>
                         }
                     </ul>
@@ -78,12 +81,6 @@
                     <img src="~/img/iconos/5296520_bubble_chat_mobile_whatsapp_whatsapp logo_icon.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
                     Contactanos
                 </a>
-            </div>
-            <div class="col">
-                @model Frontend.Models.TipoCambio
-
-                <h1>Tipo cambio</h1>
-                <h1>Compra de dolares en colones: @Model.conversion_rate</h1>
             </div>
         </div>
     </footer>

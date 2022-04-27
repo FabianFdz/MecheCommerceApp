@@ -125,12 +125,12 @@ namespace Frontend.Controllers
             {
                 DireccionCompleta = cliente.Direccion + ", " + cliente.Canton + ", " + cliente.Provincia,
                 Estado = "Completada",
-                FechaCreacion = new DateTime(),
-                FechaEntrega = new DateTime().AddDays(2),
+                FechaCreacion = DateTime.Now,
+                FechaEntrega = DateTime.Now.AddDays(2),
                 IdCliente = cliente.Id,
                 PrecioTotal = productos.Select(prod => prod.PrecioBase).Sum()
             });
-            Orden orden = cliente.Ordens.Last(); // Probar que agarre el correcto!
+            Orden orden = ordenDAL.GetAll().Where(orden => orden.IdCliente == cliente.Id).Last(); // Probar que agarre el correcto!
             foreach (ProductViewModel producto in productos)
             {
                 lineaOrdenDAL.Add(new LineasOrden

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Frontend.Controllers
 {
@@ -12,11 +13,15 @@ namespace Frontend.Controllers
     {
         IOrdenDAL OrdenDAL;
         IClienteDAL ClienteDAL;
+        ILineaOrdenDAL LineaOrdenDAL;
+        IProductoDAL ProductoDAL;
 
         public OrdenesController()
         {
             OrdenDAL = new OrdenDAL();
             ClienteDAL = new ClienteDAL();
+            LineaOrdenDAL = new LineaOrdenDAL();
+            ProductoDAL = new ProductoDAL();
         }
 
         private OrdenViewModel parseToVM(Orden orden)
@@ -37,7 +42,7 @@ namespace Frontend.Controllers
         public ActionResult Index()
         {
             Cliente cliente = ClienteDAL.GetByEmail(User.Identity.Name);
-            IEnumerable ordenes = cliente.Ordens;
+            IEnumerable ordenes = OrdenDAL.GetAll().Where(orden => orden.IdCliente == cliente.Id);
             List<OrdenViewModel> ordenesVM = new List<OrdenViewModel>();
             foreach(Orden orden in ordenes)
             {
@@ -50,7 +55,21 @@ namespace Frontend.Controllers
         // GET: OrdenesController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Cliente cliente = ClienteDAL.GetByEmail(User.Identity.Name);
+            Orden orden = OrdenDAL.GetAll().Where(orden => orden.Id == id).FirstOrDefault();
+            IEnumerable lineas = LineaOrdenDAL.GetAll().Where(linea => linea.IdOrden == orden.Id);
+            OrdenViewModel ordenVM = parseToVM(orden);
+            foreach(LineasOrden linea in lineas)
+            {
+                ordenVM.LineasOrden.Add(new LineaOrdenViewModel
+                {
+                    Id = linea.Id,
+                    Cantidad = linea.Cantidad,
+                    Precio = linea.Precio,
+                    Producto = ProductoDAL.Get(linea.IdProducto).Nombre
+                });
+            }
+            return View(ordenVM);
         }
 
         // GET: OrdenesController/Create

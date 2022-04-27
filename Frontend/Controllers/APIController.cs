@@ -13,7 +13,7 @@ namespace Frontend.Controllers
     public class APIController : Controller
     {
         // GET: APIController
-        public ActionResult tipoCambio()
+        public ActionResult TipoCambio()
         {
             try
             {

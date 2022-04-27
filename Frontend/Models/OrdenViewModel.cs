@@ -7,6 +7,10 @@ namespace Frontend.Models
 {
     public class OrdenViewModel
     {
+        public OrdenViewModel()
+        {
+            LineasOrden = new List<LineaOrdenViewModel>();
+        }
         public int Id { get; set; }
         public int IdCliente { get; set; }
         public string DireccionCompleta { get; set; }
